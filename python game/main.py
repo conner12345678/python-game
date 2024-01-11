@@ -39,22 +39,64 @@ while run:
             run = False
     keys = pygame.key.get_pressed()
     if man.hitbox.colliderect(wall.hitbox):
-        if keys[pygame.K_w] or keys[pygame.K_UP]:
-            man.y = man.y + 9
-        elif keys[pygame.K_a] or keys[pygame.K_LEFT]:
-            man.x = man.x + 9
-        elif keys[pygame.K_s] or keys[pygame.K_DOWN]:
-            man.y = man.y  - 9
-        elif keys[pygame.K_d] or keys[pygame.K_RIGHT]:
-            man.x = man.x - 9
+        it = 10
+        if wall.hitbox.top - man.hitbox.bottom < it:
+            if keys[pygame.K_s] or keys[pygame.K_DOWN]:
+                pass
+            if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
+                if man.x == 500-man.width:
+                    pass
+                else:
+                    man.x += man.vel
+            if keys[pygame.K_w] or keys[pygame.K_UP]:
+                if man.y == 0:
+                    pass
+                else:
+                    man.y -= man.vel
+            if keys[pygame.K_a] or keys[pygame.K_LEFT]:
+                if man.x == 0:
+                    pass
+                else:
+                    man.x -= man.vel
+        if wall.hitbox.bottom - man.hitbox.top < it:
+            if keys[pygame.K_s] or keys[pygame.K_DOWN]:
+                if man.y == 480-man.width:
+                    pass
+                else:
+                    man.y -= man.vel
+            if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
+                if man.x == 500-man.width:
+                    pass
+                else:
+                    man.x += man.vel
+            if keys[pygame.K_w] or keys[pygame.K_UP]:
+                pass
+            if keys[pygame.K_a] or keys[pygame.K_LEFT]:
+                if man.x == 0:
+                    pass
+                else:
+                    man.x -= man.vel
     else:
         if keys[pygame.K_w] or keys[pygame.K_UP]:
-            man.y -= man.vel
+            if man.y == 0:
+                pass
+            else:
+                man.y -= man.vel
         if keys[pygame.K_a] or keys[pygame.K_LEFT]:
-            man.x -= man.vel
+            if man.x == 0:
+                pass
+            else:
+                man.x -= man.vel
         if keys[pygame.K_s] or keys[pygame.K_DOWN]:
-            man.y += man.vel
+            if man.y == 480-man.height:
+                pass
+            else:
+                man.y += man.vel
         if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
-            man.x += man.vel
+            if man.x == 500-man.width:
+                pass
+            else:
+                man.x += man.vel
     drawOnScreen()
 pygame.quit
+print(5/2)
