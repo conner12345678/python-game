@@ -3,6 +3,7 @@ pygame.init()
 win = pygame.display.set_mode((500, 480))
 pygame.display.set_caption('The Game...')
 clock = pygame.time.Clock()
+bg = pygame.image.load('New Piskel-20240109-191930.png')
 run = True
 class Player:
     def __init__(self, x, y, width, height):
@@ -99,4 +100,3 @@ while run:
                 man.x += man.vel
     drawOnScreen()
 pygame.quit
-print(5/2)
