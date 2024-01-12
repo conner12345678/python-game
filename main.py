@@ -35,6 +35,10 @@ I make Some points in the above order then when making colision lines i use the 
 '''
 
 
+def Colision_Check(colision_lines):
+    pass
+
+
 class Game_Object():
     def __init__(self, x, y, width, height, direction):
         self.x = x
@@ -47,8 +51,7 @@ class Game_Object():
         self.colision_lines = make_colision_lines(self.cross_points, width, height)
 
 
-
-  # I init the variables i will use later. I use a function to make 4 different rectangles to represent different sides of the player so that when coliding, player input will not be taken in that same manner.
+    # I init the variables i will use later. I use a function to make 4 different rectangles to represent different sides of the player so that when coliding, player input will not be taken in that same manner.
 
 
 class Entity():
@@ -70,6 +73,8 @@ class Entity():
         print("this")
 
 
+class Enemy(Entity):
+    pass
 
 
 class Player():
