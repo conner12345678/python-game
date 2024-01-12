@@ -27,6 +27,20 @@ class block:
     def draw(self, win):
          win.blit(tree, (self.x, self.y))
          self.hitbox = pygame.Rect(self.x, self.y+64, self.width/4, self.height/3)
+class enemy:
+    def __init__(self, x, y, width, height):
+        #Initializing position size and velocity
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.velocity = 5
+        #An area that the player can colide with to hit the enemy
+        self.hitbox = pygame.Rect(self.x, self.y, self.width, self.height)
+    def draw(self, win):
+        #Drawing in the player and confirming their hitbox area
+        self.hitbox = pygame.Rect(self.x, self.y, self.width, self.height)
+        pygame.draw.rect(win, (255, 0, 0), (self.x, self.y, self.width, self.height))
 def drawOnScreen():
     screenWidth, screenHeight = win.get_size()
     imageWidth, imageHeight = bg.get_size()
@@ -37,9 +51,11 @@ def drawOnScreen():
             win.blit(bg, (x * imageWidth, y * imageHeight))
     man.draw(win)
     wall.draw(win)
+    competition.draw(win)
     pygame.display.update()
 man = Player(30, 30, 60, 60) 
-wall = block(100, 100, 200, 200) 
+wall = block(200, 200, 60, 60)
+competition = enemy(120, 120, 60, 60)
 while run:
     clock.tick(27)
     for event in pygame.event.get():
