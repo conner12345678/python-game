@@ -35,6 +35,10 @@ I make Some points in the above order then when making colision lines i use the 
 '''
 
 
+def Colision_Check(colision_lines):
+    
+
+
 class Game_Object():
     def __init__(self, x, y, width, height, direction):
         self.x = x
@@ -47,8 +51,7 @@ class Game_Object():
         self.colision_lines = make_colision_lines(self.cross_points, width, height)
 
 
-
-  # I init the variables i will use later. I use a function to make 4 different rectangles to represent different sides of the player so that when coliding, player input will not be taken in that same manner.
+    # I init the variables i will use later. I use a function to make 4 different rectangles to represent different sides of the player so that when coliding, player input will not be taken in that same manner.
 
 
 class Entity():
@@ -61,10 +64,11 @@ class Entity():
         self.hitbox = pygame.Rect(x, y, width, height)
     
 
-
     def Dialogue():
         pass
 
+
+class Enemy(Entity):
 
 
 
@@ -84,7 +88,8 @@ class Player():
         self.luck = 100
         self.RNG = 100
 
-uyu
+
+
 # Here I init some variables and set up some basic stats for our character. Our chacter has colision but NPC's will not. When walking over them a text prompt will appear. Thats how talking to NPC's will work. Enemy's will have colision but i haven't set that up yet. I also know i haven't put anything on screen yet. Thats 100% your job, fuck that. Im finally going to bed at 2am.
 
 
