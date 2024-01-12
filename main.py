@@ -59,11 +59,15 @@ class Entity():
         self.height = height
         self.direction = direction
         self.hitbox = pygame.Rect(x, y, width, height)
-    
-
-
-    def Dialogue():
-        pass
+    def draw(self, win):
+        pygame.draw.rect(win, (255, 0, 0), (self.x, self.y, self.width, self.height))
+        self.hitbox = pygame.Rect(self.x, self.y, self.width, self.height)
+    def Dialogue(self):
+        font = pygame.font.SysFont('comicsans', 100)
+        text = font.render("test", 1, (0, 0, 255))
+        window.blit(text, (self.x, self.y-20))
+        pygame.display.update()
+        print("this")
 
 
 
@@ -83,95 +87,56 @@ class Player():
         self.stamina = 100
         self.luck = 100
         self.RNG = 100
+    def draw(self, win):
+        pygame.draw.rect(win, (0, 255, 0), (self.x, self.y, self.width, self.height))
+        self.hitbox = pygame.Rect(self.x, self.y, self.width, self.height)
 
-uyu
+
 # Here I init some variables and set up some basic stats for our character. Our chacter has colision but NPC's will not. When walking over them a text prompt will appear. Thats how talking to NPC's will work. Enemy's will have colision but i haven't set that up yet. I also know i haven't put anything on screen yet. Thats 100% your job, fuck that. Im finally going to bed at 2am.
 
-
+def drawOnScreen():
+    screenWidth, screenHeight = window.get_size()
+    imageWidth, imageHeight = background.get_size()
+    tilesX = math.ceil(screenWidth / imageWidth)
+    tilesY = math.ceil(screenHeight / imageHeight)
+    for x in range(tilesX):
+        for y in range(tilesY):
+            window.blit(background, (x * imageWidth, y * imageHeight))
+    player_character.draw(window)
+    npc.draw(window)
+    pygame.display.update()
 
 class Item():
     pass
-
-player_character = Player()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# class block:
-#     def __init__(self, x, y, width, height):
-#         self.x = x
-#         self.y = y
-#         self.width = width
-#         self.height = height
-#         self.hitbox = pygame.Rect(self.x, self.y+64, self.width/4, self.height/3)
-
-#     def draw(self, win):
-#          win.blit(tree, (self.x, self.y))
-#          self.hitbox = pygame.Rect(self.x, self.y+64, self.width/4, self.height/3)
-
-# def drawOnScreen():
-#     screenWidth, screenHeight = win.get_size()
-#     imageWidth, imageHeight = bg.get_size()
-#     tilesX = math.ceil(screenWidth / imageWidth)
-#     tilesY = math.ceil(screenHeight / imageHeight)
-#     for x in range(tilesX):
-#         for y in range(tilesY):
-#             win.blit(bg, (x * imageWidth, y * imageHeight))
-#     pygame.display.update()
-
-
-# while run:
-#     clock.tick(60)
-#     for event in pygame.event.get():
-#         if event.type == pygame.QUIT:
-#             run = False
-#     keys = pygame.key.get_pressed()
-#     if keys[pygame.K_w] or keys[pygame.K_UP]:
-#         if man.y == 0:
-#             pass
-#         else:
-#             if man.hitbox.colliderect(wall.hitbox):
-#                 if man.hitbox.top - wall.hitbox.bottom < 10:
-#                     pass
-#             else:
-#                 man.y -= man.vel
-#     if keys[pygame.K_a] or keys[pygame.K_LEFT]:
-#         if man.x == 0:
-#             pass
-#         else:
-#             man.x -= man.vel
-#     if keys[pygame.K_s] or keys[pygame.K_DOWN]:
-#         if man.y == 480-man.height:
-#             pass
-#         else:
-#             if man.hitbox.colliderect(wall.hitbox):
-#                 if wall.hitbox.top - man.hitbox.bottom < 10:
-#                     pass
-#             else:
-#                 man.y += man.vel
-#     if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
-#         if man.x == 500-man.width:
-#             pass
-#         else:
-#             man.x += man.vel
-#     drawOnScreen()
-
-# pygame.quit
+player_character = Player(30, 30, 60, 60, 180)
+npc = Entity(100, 100, 60, 60, 180)
+while game_state:
+    clock.tick(60)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            game_state = False
+    if npc.hitbox.colliderect(player_character.hitbox):
+            npc.Dialogue()
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_w] or keys[pygame.K_UP]:
+        if player_character.y == 0:
+            pass
+        else:
+            player_character.y -= 5
+    if keys[pygame.K_s] or keys[pygame.K_DOWN]:
+        if player_character.y == 600-player_character.height:
+            pass
+        else:
+            player_character.y += 5
+    if keys[pygame.K_a] or keys[pygame.K_LEFT]:
+        if player_character.x == 0:
+            pass
+        else:
+            player_character.x -= 5
+    if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
+        if player_character.x == 1200-player_character.width:
+            pass
+        else:
+            player_character.x += 5
+    drawOnScreen()
+pygame.quit
