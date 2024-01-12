@@ -1,9 +1,10 @@
-import pygame
+import pygame, math
 pygame.init()
 win = pygame.display.set_mode((500, 480))
 pygame.display.set_caption('The Game...')
 clock = pygame.time.Clock()
-bg = pygame.image.load('New Piskel-20240109-191930.png')
+tree = pygame.image.load('Treeupcale128128.png')
+bg = pygame.image.load('grass.png')
 run = True
 class Player:
     def __init__(self, x, y, width, height):
@@ -22,81 +23,58 @@ class block:
         self.y = y
         self.width = width
         self.height = height
-        self.hitbox = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.hitbox = pygame.Rect(self.x, self.y+64, self.width/4, self.height/3)
     def draw(self, win):
-         pygame.draw.rect(win, (255, 0, 0), (self.hitbox))
-         self.hitbox = pygame.Rect(self.x, self.y, self.width, self.height)
+         win.blit(tree, (self.x, self.y))
+         self.hitbox = pygame.Rect(self.x, self.y+64, self.width/4, self.height/3)
 def drawOnScreen():
+    screenWidth, screenHeight = win.get_size()
+    imageWidth, imageHeight = bg.get_size()
+    tilesX = math.ceil(screenWidth / imageWidth)
+    tilesY = math.ceil(screenHeight / imageHeight)
+    for x in range(tilesX):
+        for y in range(tilesY):
+            win.blit(bg, (x * imageWidth, y * imageHeight))
     man.draw(win)
     wall.draw(win)
     pygame.display.update()
-    win.fill((0, 0, 0))
 man = Player(30, 30, 60, 60) 
-wall = block(100, 100, 60, 60) 
+wall = block(100, 100, 200, 200) 
 while run:
     clock.tick(27)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
     keys = pygame.key.get_pressed()
-    if man.hitbox.colliderect(wall.hitbox):
-        it = 10
-        if wall.hitbox.top - man.hitbox.bottom < it:
-            if keys[pygame.K_s] or keys[pygame.K_DOWN]:
-                pass
-            if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
-                if man.x == 500-man.width:
+    if keys[pygame.K_w] or keys[pygame.K_UP]:
+        if man.y == 0:
+            pass
+        else:
+            if man.hitbox.colliderect(wall.hitbox):
+                if man.hitbox.top - wall.hitbox.bottom < 10:
                     pass
-                else:
-                    man.x += man.vel
-            if keys[pygame.K_w] or keys[pygame.K_UP]:
-                if man.y == 0:
-                    pass
-                else:
-                    man.y -= man.vel
-            if keys[pygame.K_a] or keys[pygame.K_LEFT]:
-                if man.x == 0:
-                    pass
-                else:
-                    man.x -= man.vel
-        if wall.hitbox.bottom - man.hitbox.top < it:
-            if keys[pygame.K_s] or keys[pygame.K_DOWN]:
-                if man.y == 480-man.width:
-                    pass
-                else:
-                    man.y -= man.vel
-            if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
-                if man.x == 500-man.width:
-                    pass
-                else:
-                    man.x += man.vel
-            if keys[pygame.K_w] or keys[pygame.K_UP]:
-                pass
-            if keys[pygame.K_a] or keys[pygame.K_LEFT]:
-                if man.x == 0:
-                    pass
-                else:
-                    man.x -= man.vel
-    else:
-        if keys[pygame.K_w] or keys[pygame.K_UP]:
-            if man.y == 0:
-                pass
             else:
                 man.y -= man.vel
-        if keys[pygame.K_a] or keys[pygame.K_LEFT]:
-            if man.x == 0:
-                pass
-            else:
-                man.x -= man.vel
-        if keys[pygame.K_s] or keys[pygame.K_DOWN]:
-            if man.y == 480-man.height:
-                pass
+    if keys[pygame.K_a] or keys[pygame.K_LEFT]:
+        if man.x == 0:
+            pass
+        else:
+            man.x -= man.vel
+    if keys[pygame.K_s] or keys[pygame.K_DOWN]:
+        if man.y == 480-man.height:
+            pass
+        else:
+            if man.hitbox.colliderect(wall.hitbox):
+                if wall.hitbox.top - man.hitbox.bottom < 10:
+                    pass
             else:
                 man.y += man.vel
-        if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
-            if man.x == 500-man.width:
-                pass
-            else:
-                man.x += man.vel
+    if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
+        if man.x == 500-man.width:
+            pass
+        else:
+            man.x += man.vel
     drawOnScreen()
 pygame.quit
+print(man.hitbox.top - wall.hitbox.bottom)
+print(wall.hitbox.top - man.hitbox.bottom)
